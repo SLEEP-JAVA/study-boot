@@ -3,6 +3,8 @@ package com.sleep.studyboot.core.study;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
+
 @Service
 public class StudyService {
 
@@ -13,10 +15,9 @@ public class StudyService {
         this.studyRepository = studyRepository;
     }
 
-    Study create(Long id, String name) {
+    Study create(String name, String theme, OffsetDateTime startDate, OffsetDateTime endDate) {
         //TODO  DTO 받아서 생성하도록 변경
-        Study study = new Study(id, name);
+        Study study = new Study(name, theme, startDate, endDate);
         return studyRepository.save(study);
     }
 }
-
