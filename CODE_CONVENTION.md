@@ -9,29 +9,29 @@
 // setter를 쓰게 되면...
 @Setter
 public class Study {
-		private StudyState studyState;
+    private StudyState studyState;
 }
     
 @Test
 pubic void close_Study() {
-		Study study = new Study();
-		study.setStudyState(StudyState.CLOSE);
+    Study study = new Study();
+    study.setStudyState(StudyState.CLOSE);
 }
     
 // setter를 안쓰면^^
 public class Study {
-		private SutdyState sutdyState;
+    private SutdyState sutdyState;
 
-		// 이름에서 어떤 역할을 하는 메서드인지 바로 알 수 있음.
-		public closeStudy() {
-				studyState = StudyState.CLOSE;
-		}
+    // 이름에서 어떤 역할을 하는 메서드인지 바로 알 수 있음.
+    public closeStudy() {
+        studyState = StudyState.CLOSE;
+    }
 }
     
 @Test
 pubic void close_Study() {
-		Study study = new Study();
-		study.closeStudy();
+    Study study = new Study();
+    study.closeStudy();
 }
 ```
 
@@ -41,21 +41,21 @@ pubic void close_Study() {
     1. DI container에서 관리되는 클래스는 독립적으로 인스턴스화할 수 있는 단순한 POJO → DI 컨테이너를 실행하지 않고도 단위 테스트 가능 
        → 그런데 field injection을 하면 모든 빈을 다 띄우고 테스트를 해야해. 왜냐면 해당 클래스를 DI container가 관리해주니까! 
     2. constructor injection은 필드를 final로 선언할 수 있음. 그렇게 되면 불변객체로 쓸 수 있지만 field injection은 불변객체로 쓸 수없어서 중간에 상태가 바뀔 수도 있음.
-```
+```java
 // field injection
 public class StudyController {
-		@Autowired 
-		private StudyService studyService;
- 		...
+    @Autowired 
+    private StudyService studyService;
+     ...
 }
     
 // constructor injection
 public clss StudyController {
-		private final StudyService studyService;
+    private final StudyService studyService;
     
-		public StudyController(StudyService studyService) {
-				this.studyService = studyService;
-		}
+    public StudyController(StudyService studyService) {
+        this.studyService = studyService;
+    }
 }
 ```
 
@@ -67,7 +67,7 @@ public clss StudyController {
 - 이유: 특히 if 안에 또 if/else 들어 가는 경우! 가독성 매우 떨어짐.
 
 ### 하나의 메서드에는 하나의 indent만!
-```
+```java
 // 이렇게 쓰지말자
 public int evenSum() {
     ...
