@@ -1,8 +1,7 @@
 package com.sleep.studyboot.core.study;
 
-import com.sleep.studyboot.core.user.User;
+import lombok.Builder;
 import lombok.Getter;
-import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
@@ -49,23 +48,24 @@ public class Study {
     public Study() {
     }
 
-    public Study(String name, String theme, OffsetDateTime startDate, OffsetDateTime endDate) {
+    @Builder
+    protected Study(String name, String theme, OffsetDateTime startDate, OffsetDateTime endDate) {
         this.name = name;
         this.theme = theme;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public void rename(String name) {
+    protected void rename(String name) {
         this.name = name;
     }
 
-    public void changePeriod(OffsetDateTime startDate, OffsetDateTime endDate) {
+    protected void changePeriod(OffsetDateTime startDate, OffsetDateTime endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public void remove() {
+    protected void remove() {
         this.removedDate = OffsetDateTime.now();
     }
 }
