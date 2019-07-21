@@ -1,5 +1,6 @@
 package com.sleep.studyboot.core.study;
 
+import com.sleep.studyboot.dto.StudyRegisterDto;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +35,14 @@ public class StudyServiceTest {
         when(repository.save(any())).thenReturn(mockStudy);
 
         // when
-        val study = sut.create(name, theme, startDate, endDate);
+        val study = sut.create(
+                StudyRegisterDto.builder()
+                        .name(name)
+                        .theme(theme)
+                        .startDate(startDate)
+                        .endDate(endDate)
+                        .build()
+        );
 
         // then
         assertThat(study.getName()).isEqualTo(mockStudy.getName());
