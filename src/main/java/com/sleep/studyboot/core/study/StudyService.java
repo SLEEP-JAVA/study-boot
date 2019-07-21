@@ -5,7 +5,6 @@ import com.sleep.studyboot.dto.OpenStudyDto;
 import com.sleep.studyboot.dto.StudyListDto;
 import com.sleep.studyboot.dto.StudyRegisterDto;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class StudyService {
     private final StudyRepository studyRepository;
 
     protected Study create(StudyRegisterDto studyRegisterDto) {
-        val study = Study.builder()
+        var study = Study.builder()
                 .name(studyRegisterDto.getName())
                 .theme(studyRegisterDto.getTheme())
                 .startDate(studyRegisterDto.getStartDate())
@@ -33,7 +32,7 @@ public class StudyService {
     }
 
     public List<OpenStudyDto> getAllOpenStudies() {
-        val studies = studyRepository.findByRemovedDateIsNull();
+        var studies = studyRepository.findByRemovedDateIsNull();
 
         return studies.stream()
                 .map(study -> OpenStudyDto.of(study))
@@ -41,7 +40,7 @@ public class StudyService {
     }
 
     public List<ClosedStudyDto> getAllClosedStudies() {
-        val studies = studyRepository.findByRemovedDateIsNotNull();
+        var studies = studyRepository.findByRemovedDateIsNotNull();
 
         return studies.stream()
                 .map(study -> ClosedStudyDto.of(study))
@@ -49,7 +48,7 @@ public class StudyService {
     }
 
     public OpenStudyDto getStudy(Long studyId) {
-        val study = studyRepository.findById(studyId)
+        var study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new IllegalArgumentException("스터디 " + studyId + "는 존재하지 않습니다."));
 
         return OpenStudyDto.of(study);

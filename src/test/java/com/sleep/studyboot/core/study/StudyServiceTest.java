@@ -1,7 +1,6 @@
 package com.sleep.studyboot.core.study;
 
 import com.sleep.studyboot.dto.StudyRegisterDto;
-import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,16 +25,16 @@ public class StudyServiceTest {
     @Test
     void study_생성_ok() {
         // given
-        val name = "이름";
-        val theme = "테마";
-        val startDate = OffsetDateTime.now();
-        val endDate = startDate.plusMonths(1);
+        var name = "이름";
+        var theme = "테마";
+        var startDate = OffsetDateTime.now();
+        var endDate = startDate.plusMonths(1);
 
         Study mockStudy = new Study(name, theme, startDate, endDate);
         when(repository.save(any())).thenReturn(mockStudy);
 
         // when
-        val study = sut.create(
+        var study = sut.create(
                 StudyRegisterDto.builder()
                         .name(name)
                         .theme(theme)

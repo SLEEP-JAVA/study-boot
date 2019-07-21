@@ -2,7 +2,6 @@ package com.sleep.studyboot.core.study;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.val;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
@@ -38,7 +37,7 @@ public class Study {
 
     @PrePersist
     protected void onCreate() {
-        val now = OffsetDateTime.now();
+        var now = OffsetDateTime.now();
 
         this.createdDate = now;
         this.modifiedDate = now;
