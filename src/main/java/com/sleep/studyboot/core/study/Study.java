@@ -1,53 +1,74 @@
 package com.sleep.studyboot.core.study;
 
-import java.time.OffsetDateTime;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-
-import org.springframework.data.annotation.CreatedBy;
-
-import com.sleep.studyboot.core.user.User;
-
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+
+import javax.persistence.*;
+import java.time.OffsetDateTime;
 
 @Entity
 @Getter
-@Setter
-@Accessors(chain = true)
 public class Study {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 20, nullable = false)
     private String name;
+
+    // FIXME: String -> Theme
+    @Column(length = 10, nullable = false)
     private String theme;
 
-    @CreatedBy
-    private User leader;
-
+    @Column(nullable = false)
     private OffsetDateTime startDate;
+
+    @Column(nullable = false)
     private OffsetDateTime endDate;
 
-    private OffsetDateTime modifiedDate;
+    // TODO: Create User Table
+//    @CreatedBy
+//    private User leader;
+
     private OffsetDateTime createdDate;
+    private OffsetDateTime modifiedDate;
     private OffsetDateTime removedDate;
 
     @PrePersist
-    protected void onCreate(){
-        if (id == null) {
-            setId(System.currentTimeMillis());
-        }
+    protected void onCreate() {
+        var now = OffsetDateTime.now();
+
+        this.createdDate = now;
+        this.modifiedDate = now;
     }
 
-    Study(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    @PreUpdate
+    protected void onUpdate() {
+        this.modifiedDate = OffsetDateTime.now();
     }
 
     public Study() {
-        new Study(null, null);
+    }
+
+    @Builder
+    protected Study(String name, String theme, OffsetDateTime startDate, OffsetDateTime endDate) {
+        this.name = name;
+        this.theme = theme;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    protected void rename(String name) {
+        this.name = name;
+    }
+
+    protected void changePeriod(OffsetDateTime startDate, OffsetDateTime endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    protected void remove() {
+        this.removedDate = OffsetDateTime.now();
     }
 }
