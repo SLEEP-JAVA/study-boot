@@ -1,6 +1,4 @@
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-    }
-}
 rootProject.name = 'studyboot'
+
+include('api')
+include('frontend')
