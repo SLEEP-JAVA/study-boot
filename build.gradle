@@ -1,39 +1,66 @@
-plugins {
-    id 'org.springframework.boot' version '2.1.6.RELEASE'
-    id 'java'
-}
 
-apply plugin: 'io.spring.dependency-management'
 
-group = 'com.sleep'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+buildscript {
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
+    ext {
+        springBootVersion = '2.1.6.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE"
     }
 }
 
-repositories {
-    mavenCentral()
-    jcenter()
+allprojects {
+    group 'com.sleep'
+    version = '0.0.1-SNAPSHOT'
 }
 
-dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.8'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'mysql:mysql-connector-java'
-    annotationProcessor 'org.projectlombok:lombok'
+def javaProjects = subprojects - project('frontend')
+configure(javaProjects) {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
-    testImplementation 'org.mockito:mockito-core:2.27.0'
-    testImplementation 'org.mockito:mockito-junit-jupiter:2.27.0'
-    testImplementation 'org.assertj:assertj-core:3.12.2'
+    sourceCompatibility = 11
 
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.assertj', module: 'assertj-core'
-        exclude group: 'org.mockito', module: 'mockito-core'
+    repositories {
+        mavenCentral()
+    }
+
+    sourceSets {
+        integrationTest {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+
+            java {
+                srcDirs = ['src/integration-test/java']
+            }
+
+            resources {
+                srcDirs = ['src/integration-test/resources']
+            }
+        }
+    }
+    
+    dependencies {
+        compileOnly 'org.projectlombok:lombok:1.18.8'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        runtimeOnly 'com.h2database:h2'
+        runtimeOnly 'mysql:mysql-connector-java'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        testImplementation 'org.mockito:mockito-core:2.27.0'
+        testImplementation 'org.mockito:mockito-junit-jupiter:2.27.0'
+        testImplementation 'org.assertj:assertj-core:3.12.2'
+
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.assertj', module: 'assertj-core'
+            exclude group: 'org.mockito', module: 'mockito-core'
+        }
     }
 }
