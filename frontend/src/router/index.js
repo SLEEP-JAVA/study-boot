@@ -15,6 +15,21 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/study/list',
+      name: 'Study',
+      component: () => import('@/components/StudyList.vue')
+    },
+    {
+      path: '/signup',
+      name: 'Signup',
+      component: () => import('@/components/Signup.vue')
+    },
+    {
+      path: '/study/create',
+      name: 'StudyForm',
+      component: () => import('@/components/StudyForm.vue')
     }
   ]
 })
