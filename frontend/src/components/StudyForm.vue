@@ -6,11 +6,11 @@
           <el-form-item label="스터디명">
             <el-input v-model="form.name"></el-input>
           </el-form-item>
-        <el-form-item label="카테고리">
-              <el-select v-model="form.category" placeholder="카테고리를 선택해주세요.">
-                 <el-option v-for="option in categoryOptions" :label=option :value=option></el-option>
-               </el-select>
-             </el-form-item>
+          <el-form-item label="카테고리">
+            <el-select v-model="form.category" placeholder="카테고리를 선택해주세요.">
+              <el-option v-for="option in categoryOptions" :label=option :value=option></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="스터디 기간">
             <el-col :span="11">
               <el-date-picker type="date" placeholder="시작일을 선택하세요 🙂" v-model="form.startDate" style="width: 100%;"></el-date-picker>
@@ -30,11 +30,17 @@
             <el-input type="textarea" rows=20 v-model="form.desc"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button>좀더 생각해볼래요</el-button>
-            <el-button type="primary" @click="onSubmit">✨스터디 만들기✨</el-button>
+            <el-button v-if="!show">좀더 생각해볼래요</el-button>
+            <el-button type="primary" @click="onSubmit">{{buttonPhrase[show]}}</el-button>
+          </el-form-item>
+          <el-form-item >
+            <transition name="fade">
+             <span v-if="show" style="font-weight: 700;">추가로 스터디원에게 원하는 정보가 있나요? 👀
+               <el-button> YES </el-button>
+             </span>
+            </transition>
           </el-form-item>
         </el-form>
-
       </el-col>
     </el-row>
   </div>
@@ -53,29 +59,39 @@
           type: [],
           desc: ''
         },
-        categoryOptions : [
+        categoryOptions: [
           'FrontEnd 프론트엔드',
           'BackEnd 백엔드',
           'Algorithm 알고리즘',
           'Design 디자인'
         ],
-        studyType : [
+        studyType: [
           '온라인 스터디',
           '오프라인 스터디',
           '토이 프로젝트',
           '책 함께 읽기',
           '발표 / 요약',
-        ]
+        ],
+        show: false,
+        buttonPhrase: { false: '✨스터디 만들기✨', true: '✅ 스터디 만드는 중'}
       }
     },
     methods: {
       onSubmit() {
         console.log('submit!');
+        this.show = !this.show
       }
     }
   }
 </script>
+
 <style>
+  .fade-enter-active, .fade-leave-active {
+    transition:  all .6s ease;
+  }
 
-
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
+  {
+    opacity: 0;
+  }
 </style>
