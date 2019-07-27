@@ -1,6 +1,7 @@
 package com.sleep.studyboot.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sleep.studyboot.core.study.Category;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,10 @@ import java.time.ZoneOffset;
 public class StudyRegisterDto {
 
     private String name;
-    private String theme;
+    private Category category;
+    private String description;
+    private String place;
+    private int volume;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startDate;
@@ -23,9 +27,12 @@ public class StudyRegisterDto {
     private LocalDateTime endDate;
 
     @Builder
-    public StudyRegisterDto(String name, String theme, LocalDateTime startDate, LocalDateTime endDate) {
+    public StudyRegisterDto(String name, Category category, String description, String place, int volume, LocalDateTime startDate, LocalDateTime endDate) {
         this.name = name;
-        this.theme = theme;
+        this.category = category;
+        this.description = description;
+        this.place = place;
+        this.volume = volume;
         this.startDate = startDate;
         this.endDate = endDate;
     }

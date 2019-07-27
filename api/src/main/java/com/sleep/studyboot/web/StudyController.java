@@ -37,7 +37,7 @@ public class StudyController {
     // FIXME: Spring Security @김민지
     @PostMapping("/v1/users/{userId}/studies")
     public ResponseEntity registerStudy(@PathVariable Long userId, @RequestBody StudyRegisterDto study) {
-        studyService.setStudy(userId, study);
+        studyService.create(userId, study);
         return ResponseEntity.ok().build();
     }
 }

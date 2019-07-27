@@ -17,9 +17,18 @@ public class Study {
     @Column(length = 20, nullable = false)
     private String name;
 
-    // FIXME: String -> Theme
     @Column(length = 10, nullable = false)
-    private String theme;
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    @Column(length = 512)
+    private String description;
+
+    @Column(length = 20, nullable = false)
+    private String place;
+
+    @Column(nullable = false)
+    private int volume;
 
     @Column(nullable = false)
     private OffsetDateTime startDate;
@@ -52,9 +61,12 @@ public class Study {
     }
 
     @Builder
-    protected Study(String name, String theme, OffsetDateTime startDate, OffsetDateTime endDate) {
+    public Study(String name, Category category, String description, String place, int volume, OffsetDateTime startDate, OffsetDateTime endDate) {
         this.name = name;
-        this.theme = theme;
+        this.category = category;
+        this.description = description;
+        this.place = place;
+        this.volume = volume;
         this.startDate = startDate;
         this.endDate = endDate;
     }

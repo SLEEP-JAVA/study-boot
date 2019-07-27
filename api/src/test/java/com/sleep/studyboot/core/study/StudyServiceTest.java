@@ -6,8 +6,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -22,22 +26,34 @@ public class StudyServiceTest {
     @InjectMocks
     StudyService sut;
 
+    final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     @Test
     void study_생성_ok() {
         // given
+        var userId = 0L;
         var name = "이름";
-        var theme = "테마";
-        var startDate = OffsetDateTime.now();
+        var category = Category.FRONTEND;
+        var description = "설명";
+        var place = "장소";
+        var volume = 4;
+        var startDate = LocalDateTime.now();
         var endDate = startDate.plusMonths(1);
 
-        Study mockStudy = new Study(name, theme, startDate, endDate);
+        Study mockStudy = new Study(name, category, description, place, volume, OffsetDateTime.of(startDate, ZoneOffset.UTC), OffsetDateTime.of(endDate, ZoneOffset.UTC));
+        ReflectionTestUtils.setField(mockStudy, "createdDate", OffsetDateTime.now());
+        ReflectionTestUtils.setField(mockStudy, "modifiedDate", OffsetDateTime.now());
+
         when(repository.save(any())).thenReturn(mockStudy);
 
         // when
-        var study = sut.create(
+        var study = sut.create(userId,
                 StudyRegisterDto.builder()
                         .name(name)
-                        .theme(theme)
+                        .category(category)
+                        .description(description)
+                        .place(place)
+                        .volume(volume)
                         .startDate(startDate)
                         .endDate(endDate)
                         .build()
@@ -45,8 +61,8 @@ public class StudyServiceTest {
 
         // then
         assertThat(study.getName()).isEqualTo(mockStudy.getName());
-        assertThat(study.getTheme()).isEqualTo(mockStudy.getTheme());
-        assertThat(study.getStartDate()).isEqualTo(mockStudy.getStartDate());
-        assertThat(study.getEndDate()).isEqualTo(mockStudy.getEndDate());
+        assertThat(study.getCategory()).isEqualTo(mockStudy.getCategory());
+        assertThat(study.getStartDate()).isEqualTo(mockStudy.getStartDate().format(formatter));
+        assertThat(study.getEndDate()).isEqualTo(mockStudy.getEndDate().format(formatter));
     }
 }

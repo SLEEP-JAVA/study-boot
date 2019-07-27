@@ -1,6 +1,7 @@
 package com.sleep.studyboot.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sleep.studyboot.core.study.Category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,8 +16,10 @@ class StudyDto {
 
     protected Long id;
     protected String name;
-    protected String theme;
-
+    protected Category category;
+    protected String description;
+    protected String place;
+    protected int volume;
     protected String startDate;
     protected String endDate;
 }
