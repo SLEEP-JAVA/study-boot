@@ -53,4 +53,15 @@ public class StudyService {
 
         return OpenStudyDto.of(study);
     }
+
+    public OpenStudyDto setStudy(Long userId, StudyRegisterDto studyRegisterDto) {
+        Study study = Study.builder()
+                .name(studyRegisterDto.getName())
+                .theme(studyRegisterDto.getTheme())
+                .startDate(studyRegisterDto.getStartDate())
+                .endDate(studyRegisterDto.getEndDate())
+                .build();
+
+        return OpenStudyDto.of(studyRepository.save(study));
+    }
 }

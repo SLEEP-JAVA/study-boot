@@ -1,0 +1,15 @@
+POST {{address}}/v1/users/{{userId}}/studies
+Content-Type: application/json
+
+{
+  "name": "스터디명",
+  "theme": "테마명",
+  "startDate": "2019-07-27 00:00:00",
+  "endDate": "2019-08-26 23:59:59"
+}
+
+###
+
+GET {{address}}/v1/studies
+
+###
