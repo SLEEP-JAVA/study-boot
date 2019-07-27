@@ -1,20 +1,46 @@
 package com.sleep.studyboot.core.user;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.sleep.studyboot.dto.GithubUserDetails;
+import lombok.*;
 
 @Entity
-@Getter
-@Setter
+@Table(name = "user")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
 
-    // FIXME: id가 없어서 임시로 추가
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nick_name")
     private String nickname;
-    private String snsId;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "name")
+    private String name;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "provider_id", referencedColumnName = "provider_id")
+    private UserAuth userAuth;
+
+    @Builder
+    private User(String nickname, String email, String name, UserAuth userAuth) {
+        this.nickname = nickname;
+        this.email = email;
+        this.name = name;
+        this.userAuth = userAuth;
+    }
+
+    public static User signUp(UserAuth userAuth) {
+        return User.builder()
+                .nickname(userAuth.getSnsId())
+                .email(userAuth.getEmail())
+                .name(userAuth.getName())
+                .userAuth(userAuth)
+                .build();
+    }
 }
