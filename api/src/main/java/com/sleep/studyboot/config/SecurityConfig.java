@@ -44,10 +44,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .antMatcher("/**").authorizeRequests().antMatchers("/", "/login**").permitAll().anyRequest()
-                .authenticated().and().exceptionHandling()
+                .antMatcher("/**").authorizeRequests().antMatchers("/", "/login**")
+                .permitAll().anyRequest().authenticated()
+                .and().logout().logoutSuccessUrl("/").permitAll()
+                .and().exceptionHandling()
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/")).and()
                 .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
+
 
         // logout
         http.logout()
