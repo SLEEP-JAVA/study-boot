@@ -1,28 +1,51 @@
 <template>
   <el-menu :default-active=activeIndex mode="horizontal" :router=true>
-    <el-menu-item index="1"  :route="{name:'Home'}">메인 </el-menu-item>
-    <el-menu-item index="2"  :route="{name:'Signup'}">회원가입 </el-menu-item>
-    <el-submenu index="3">
-      <template slot="title">스터디 보기  </template>
-      <el-menu-item active index="3-1" :route="{name:'Study'}">지금 핫한 스터디 🔥</el-menu-item>
-      <el-menu-item index="3-2">마감된 스터디 😢</el-menu-item>
-      <el-menu-item index="3-3">종료된 스터디 ✅</el-menu-item>
+    <el-menu-item index="1" :route="{name:'Home'}">메인</el-menu-item>
+    <el-submenu index="2">
+      <template slot="title">스터디 보기</template>
+      <el-menu-item active index="2-1" :route="{name:'Study'}">지금 핫한 스터디 🔥</el-menu-item>
+      <el-menu-item index="2-2">마감된 스터디 😢</el-menu-item>
+      <el-menu-item index="2-3">종료된 스터디 ✅</el-menu-item>
     </el-submenu>
-    <el-menu-item index="4" :route="{name: 'StudyForm'}"> <el-button type="primary" icon="el-icon-edit" round >스터디 만들기</el-button></el-menu-item>
+    <el-menu-item index="3" :route="{name: 'StudyForm'}">
+      <el-button type="primary" icon="el-icon-edit" round>스터디 만들기</el-button>
+    </el-menu-item>
+    <el-menu-item index="4" style="float: right">
+      <el-button round v-if="logined" @click="logout">로그아웃</el-button>
+      <el-button round v-else @click="login">가입 및 로그인</el-button>
+    </el-menu-item>
   </el-menu>
 </template>
 
 <script>
-  export default {
-    name: 'Nav',
-    data() {
-      return {
-        activeIndex: '1',
-      };
+export default {
+  name: 'Nav',
+  data () {
+    return {
+      activeIndex: '1'
+    }
+  },
+  methods: {
+    login () {
+      this.$http.get('/api/login/github')
+        .then((res) => {
+          window.location.href = res.data
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
-    methods: {
+    logout () {
+      this.$http.post('/api/logout')
+        .then((res) => {
+          window.location.href = res.data
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }
+}
 </script>
 
 <style>
