@@ -10,9 +10,9 @@
     <el-menu-item index="3" :route="{name: 'StudyForm'}">
       <el-button type="primary" icon="el-icon-edit" round>스터디 만들기</el-button>
     </el-menu-item>
-    <el-menu-item index="4" style="float: right">
-      <el-button round v-if="logined" @click="logout">로그아웃</el-button>
-      <el-button round v-else @click="login">가입 및 로그인</el-button>
+    <el-menu-item style="float: right">
+      <!-- TODO v-if로 로그인 시 로그아웃 버튼 만들기 -->
+      <el-button round @click="login">가입 및 로그인</el-button>
     </el-menu-item>
   </el-menu>
 </template>
