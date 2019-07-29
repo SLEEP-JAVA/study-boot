@@ -1,5 +1,6 @@
 package com.sleep.studyboot.dto;
 
+import com.sleep.studyboot.core.study.Category;
 import com.sleep.studyboot.core.study.Study;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,34 +10,34 @@ import java.time.OffsetDateTime;
 
 @NoArgsConstructor
 @Getter
-public class OpenStudyDto {
+public class OpenStudyDto extends StudyDto {
 
-    private Long id;
-    private String name;
-    private String theme;
-
-    private OffsetDateTime startDate;
-    private OffsetDateTime endDate;
-
-    private OffsetDateTime createdDate;
-    private OffsetDateTime modifiedDate;
+    private String createdDate;
+    private String modifiedDate;
 
     @Builder
-    public OpenStudyDto(Long id, String name, String theme, OffsetDateTime startDate, OffsetDateTime endDate, OffsetDateTime createdDate, OffsetDateTime modifiedDate) {
+    public OpenStudyDto(Long id, String name, Category category, String description, String place, int volume,
+                          OffsetDateTime startDate, OffsetDateTime endDate, OffsetDateTime createdDate, OffsetDateTime modifiedDate) {
         this.id = id;
         this.name = name;
-        this.theme = theme;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
+        this.category = category;
+        this.description = description;
+        this.place = place;
+        this.volume = volume;
+        this.startDate = startDate.format(formatter);
+        this.endDate = endDate.format(formatter);
+        this.createdDate = createdDate.format(formatter);
+        this.modifiedDate = modifiedDate.format(formatter);
     }
 
     public static OpenStudyDto of(Study study) {
         return OpenStudyDto.builder()
                 .id(study.getId())
                 .name(study.getName())
-                .theme(study.getTheme())
+                .category(study.getCategory())
+                .description(study.getDescription())
+                .place(study.getPlace())
+                .volume(study.getVolume())
                 .startDate(study.getStartDate())
                 .endDate(study.getEndDate())
                 .createdDate(study.getCreatedDate())

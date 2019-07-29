@@ -16,15 +16,18 @@ public class StudyService {
 
     private final StudyRepository studyRepository;
 
-    protected Study create(StudyRegisterDto studyRegisterDto) {
-        var study = Study.builder()
+    public OpenStudyDto create(Long userId, StudyRegisterDto studyRegisterDto) {
+        Study study = Study.builder()
                 .name(studyRegisterDto.getName())
-                .theme(studyRegisterDto.getTheme())
+                .category(studyRegisterDto.getCategory())
+                .description(studyRegisterDto.getDescription())
+                .place(studyRegisterDto.getPlace())
+                .volume(studyRegisterDto.getVolume())
                 .startDate(studyRegisterDto.getStartDate())
                 .endDate(studyRegisterDto.getEndDate())
                 .build();
 
-        return studyRepository.save(study);
+        return OpenStudyDto.of(studyRepository.save(study));
     }
 
     public StudyListDto getAllStudies() {

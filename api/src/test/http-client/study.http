@@ -1,0 +1,18 @@
+POST {{address}}/v1/users/{{userId}}/studies
+Content-Type: application/json
+
+{
+  "name": "슬뤼입",
+  "category": "BACKEND",
+  "description": "자는 스터디 아닙니다. +_+",
+  "place": "하나아아아암!!",
+  "volume": 4,
+  "startDate": "2019-07-27 00:00:00",
+  "endDate": "2019-08-26 23:59:59"
+}
+
+###
+
+GET {{address}}/v1/studies
+
+###
