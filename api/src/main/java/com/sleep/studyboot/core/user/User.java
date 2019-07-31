@@ -1,8 +1,10 @@
 package com.sleep.studyboot.core.user;
 
-import javax.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
-import lombok.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
@@ -22,24 +24,22 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "provider_id", referencedColumnName = "provider_id")
-    private UserAuth userAuth;
+    @Column(name = "avartar_url")
+    private String avartarUrl;
 
     @Builder
-    private User(String nickname, String email, String name, UserAuth userAuth) {
+    public User(String nickname, String email, String name, String avartarUrl) {
         this.nickname = nickname;
         this.email = email;
         this.name = name;
-        this.userAuth = userAuth;
+        this.avartarUrl = avartarUrl;
     }
 
-    public static User signUp(UserAuth userAuth) {
-        return User.builder()
-                .nickname(userAuth.getSnsId())
-                .email(userAuth.getEmail())
-                .name(userAuth.getName())
-                .userAuth(userAuth)
-                .build();
+    public User updateByGithub(String name, String snsId, String avartarUrl) {
+        this.name = name;
+        this.nickname = snsId;
+        this.avartarUrl = avartarUrl;
+
+        return this;
     }
 }
