@@ -19,8 +19,6 @@ import java.util.Map;
 public class OAuth2UserInfo implements OAuth2User, Serializable {
     private final static ObjectMapper OBJECT_MAPPER = Jackson2ObjectMapperBuilder.json().build();
 
-    private String nickname;
-
     private String email;
 
     private String name;
@@ -28,16 +26,14 @@ public class OAuth2UserInfo implements OAuth2User, Serializable {
     private String avartarUrl;
 
     @Builder
-    public OAuth2UserInfo(String nickname, String email, String name, String avartarUrl) {
-        this.nickname = nickname;
+    public OAuth2UserInfo(String email, String name, String avartarUrl) {
         this.email = email;
         this.name = name;
         this.avartarUrl = avartarUrl;
     }
 
-    public static OAuth2UserInfo newInstnace(String nickname, String email, String name, String avartarUrl) {
+    public static OAuth2UserInfo newInstance(String email, String name, String avartarUrl) {
         return OAuth2UserInfo.builder()
-                .nickname(nickname)
                 .email(email)
                 .name(name)
                 .avartarUrl(avartarUrl)
