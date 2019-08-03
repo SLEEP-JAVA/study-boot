@@ -4,9 +4,10 @@ import Home from '@/components/Home'
 import Nav from '@/components/Nav'
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/ko'
 
 Vue.use(Router)
-Vue.use(ElementUI)
+Vue.use(ElementUI,{ locale })
 Vue.use(Nav)
 
 export default new Router({
