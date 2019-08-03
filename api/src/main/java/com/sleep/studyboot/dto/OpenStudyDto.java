@@ -16,14 +16,14 @@ public class OpenStudyDto extends StudyDto {
     private String modifiedDate;
 
     @Builder
-    public OpenStudyDto(Long id, String name, Category category, String description, String place, int volume,
+    public OpenStudyDto(Long id, String name, Category category, String description, String place, int capacity,
                           OffsetDateTime startDate, OffsetDateTime endDate, OffsetDateTime createdDate, OffsetDateTime modifiedDate) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.description = description;
         this.place = place;
-        this.volume = volume;
+        this.capacity = capacity;
         this.startDate = startDate.format(formatter);
         this.endDate = endDate.format(formatter);
         this.createdDate = createdDate.format(formatter);
@@ -37,7 +37,7 @@ public class OpenStudyDto extends StudyDto {
                 .category(study.getCategory())
                 .description(study.getDescription())
                 .place(study.getPlace())
-                .volume(study.getVolume())
+                .capacity(study.getCapacity())
                 .startDate(study.getStartDate())
                 .endDate(study.getEndDate())
                 .createdDate(study.getCreatedDate())

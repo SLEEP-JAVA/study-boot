@@ -18,7 +18,7 @@ public class StudyRegisterDto {
     private Category category;
     private String description;
     private String place;
-    private int volume;
+    private int capacity;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startDate;
@@ -27,12 +27,12 @@ public class StudyRegisterDto {
     private LocalDateTime endDate;
 
     @Builder
-    public StudyRegisterDto(String name, Category category, String description, String place, int volume, LocalDateTime startDate, LocalDateTime endDate) {
+    public StudyRegisterDto(String name, Category category, String description, String place, int capacity, LocalDateTime startDate, LocalDateTime endDate) {
         this.name = name;
         this.category = category;
         this.description = description;
         this.place = place;
-        this.volume = volume;
+        this.capacity = capacity;
         this.startDate = startDate;
         this.endDate = endDate;
     }

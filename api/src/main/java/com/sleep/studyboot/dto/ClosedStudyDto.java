@@ -15,14 +15,14 @@ public class ClosedStudyDto extends StudyDto {
     private String removedDate;
 
     @Builder
-    public ClosedStudyDto(Long id, String name, Category category, String description, String place, int volume,
+    public ClosedStudyDto(Long id, String name, Category category, String description, String place, int capacity,
                           OffsetDateTime startDate, OffsetDateTime endDate, OffsetDateTime removedDate) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.description = description;
         this.place = place;
-        this.volume = volume;
+        this.capacity = capacity;
         this.startDate = startDate.format(formatter);
         this.endDate = endDate.format(formatter);
         this.removedDate = removedDate.format(formatter);
@@ -35,7 +35,7 @@ public class ClosedStudyDto extends StudyDto {
                 .category(study.getCategory())
                 .description(study.getDescription())
                 .place(study.getPlace())
-                .volume(study.getVolume())
+                .capacity(study.getCapacity())
                 .startDate(study.getStartDate())
                 .endDate(study.getEndDate())
                 .removedDate(study.getRemovedDate())

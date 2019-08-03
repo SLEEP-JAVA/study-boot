@@ -36,11 +36,11 @@ public class StudyServiceTest {
         var category = Category.FRONTEND;
         var description = "설명";
         var place = "장소";
-        var volume = 4;
+        var capacity = 4;
         var startDate = LocalDateTime.now();
         var endDate = startDate.plusMonths(1);
 
-        Study mockStudy = new Study(name, category, description, place, volume, OffsetDateTime.of(startDate, ZoneOffset.UTC), OffsetDateTime.of(endDate, ZoneOffset.UTC));
+        Study mockStudy = new Study(name, category, description, place, capacity, OffsetDateTime.of(startDate, ZoneOffset.UTC), OffsetDateTime.of(endDate, ZoneOffset.UTC));
         ReflectionTestUtils.setField(mockStudy, "createdDate", OffsetDateTime.now());
         ReflectionTestUtils.setField(mockStudy, "modifiedDate", OffsetDateTime.now());
 
@@ -53,7 +53,7 @@ public class StudyServiceTest {
                         .category(category)
                         .description(description)
                         .place(place)
-                        .volume(volume)
+                        .capacity(capacity)
                         .startDate(startDate)
                         .endDate(endDate)
                         .build()

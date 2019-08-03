@@ -28,7 +28,7 @@ public class Study {
     private String place;
 
     @Column(nullable = false)
-    private int volume;
+    private int capacity;
 
     @Column(nullable = false)
     private OffsetDateTime startDate;
@@ -61,12 +61,12 @@ public class Study {
     }
 
     @Builder
-    public Study(String name, Category category, String description, String place, int volume, OffsetDateTime startDate, OffsetDateTime endDate) {
+    public Study(String name, Category category, String description, String place, int capacity, OffsetDateTime startDate, OffsetDateTime endDate) {
         this.name = name;
         this.category = category;
         this.description = description;
         this.place = place;
-        this.volume = volume;
+        this.capacity = capacity;
         this.startDate = startDate;
         this.endDate = endDate;
     }

@@ -19,7 +19,7 @@ class StudyDto {
     protected Category category;
     protected String description;
     protected String place;
-    protected int volume;
+    protected int capacity;
     protected String startDate;
     protected String endDate;
 }

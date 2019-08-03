@@ -22,7 +22,7 @@ public class StudyService {
                 .category(studyRegisterDto.getCategory())
                 .description(studyRegisterDto.getDescription())
                 .place(studyRegisterDto.getPlace())
-                .volume(studyRegisterDto.getVolume())
+                .capacity(studyRegisterDto.getCapacity())
                 .startDate(studyRegisterDto.getStartDate())
                 .endDate(studyRegisterDto.getEndDate())
                 .build();

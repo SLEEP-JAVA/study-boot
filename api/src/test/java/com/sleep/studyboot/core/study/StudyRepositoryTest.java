@@ -27,12 +27,12 @@ public class StudyRepositoryTest {
         var category = Category.FRONTEND;
         var description = "설명";
         var place = "장소";
-        var volume = 4;
+        var capacity = 4;
         var startDate = LocalDateTime.now();
         var endDate = startDate.plusMonths(1);
 
         // when
-        var mayBeStudy = new Study(name, category, description, place, volume, OffsetDateTime.of(startDate, ZoneOffset.UTC), OffsetDateTime.of(endDate, ZoneOffset.UTC));
+        var mayBeStudy = new Study(name, category, description, place, capacity, OffsetDateTime.of(startDate, ZoneOffset.UTC), OffsetDateTime.of(endDate, ZoneOffset.UTC));
         studyRepository.save(mayBeStudy);
 
         // then
