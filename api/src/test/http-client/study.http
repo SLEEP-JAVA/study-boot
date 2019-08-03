@@ -7,8 +7,8 @@ Content-Type: application/json
   "description": "자는 스터디 아닙니다. +_+",
   "place": "하나아아아암!!",
   "capacity": 4,
-  "startDate": "2019-07-27 00:00:00",
-  "endDate": "2019-08-26 23:59:59"
+  "startDate": "2019-07-27",
+  "endDate": "2019-08-27"
 }
 
 ###

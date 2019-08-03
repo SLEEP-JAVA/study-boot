@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -31,10 +32,10 @@ public class Study {
     private int capacity;
 
     @Column(nullable = false)
-    private OffsetDateTime startDate;
+    private LocalDate startDate;
 
     @Column(nullable = false)
-    private OffsetDateTime endDate;
+    private LocalDate endDate;
 
     // TODO: Create User Table
 //    @CreatedBy
@@ -61,7 +62,7 @@ public class Study {
     }
 
     @Builder
-    public Study(String name, Category category, String description, String place, int capacity, OffsetDateTime startDate, OffsetDateTime endDate) {
+    public Study(String name, Category category, String description, String place, int capacity, LocalDate startDate, LocalDate endDate) {
         this.name = name;
         this.category = category;
         this.description = description;
@@ -75,7 +76,7 @@ public class Study {
         this.name = name;
     }
 
-    protected void changePeriod(OffsetDateTime startDate, OffsetDateTime endDate) {
+    protected void changePeriod(LocalDate startDate, LocalDate endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
     }

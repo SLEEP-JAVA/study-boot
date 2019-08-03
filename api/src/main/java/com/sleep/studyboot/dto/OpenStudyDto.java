@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @NoArgsConstructor
@@ -17,17 +18,17 @@ public class OpenStudyDto extends StudyDto {
 
     @Builder
     public OpenStudyDto(Long id, String name, Category category, String description, String place, int capacity,
-                          OffsetDateTime startDate, OffsetDateTime endDate, OffsetDateTime createdDate, OffsetDateTime modifiedDate) {
+                        LocalDate startDate, LocalDate endDate, OffsetDateTime createdDate, OffsetDateTime modifiedDate) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.description = description;
         this.place = place;
         this.capacity = capacity;
-        this.startDate = startDate.format(formatter);
-        this.endDate = endDate.format(formatter);
-        this.createdDate = createdDate.format(formatter);
-        this.modifiedDate = modifiedDate.format(formatter);
+        this.startDate = startDate.format(dateFormatter);
+        this.endDate = endDate.format(dateFormatter);
+        this.createdDate = createdDate.format(dateTimeFormatter);
+        this.modifiedDate = modifiedDate.format(dateTimeFormatter);
     }
 
     public static OpenStudyDto of(Study study) {

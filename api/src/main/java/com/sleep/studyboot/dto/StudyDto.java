@@ -12,7 +12,10 @@ import java.time.format.DateTimeFormatter;
 class StudyDto {
 
     @JsonIgnore
-    static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    @JsonIgnore
+    static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     protected Long id;
     protected String name;
