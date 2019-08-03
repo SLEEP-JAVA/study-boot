@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     login () {
-      this.$http.get('/api/login/github')
+      this.$http.get('/api/oauth2/authorization/github')
         .then((res) => {
           window.location.href = res.data
         })
