@@ -6,9 +6,18 @@
           <el-form-item label="스터디명">
             <el-input v-model="form.name"></el-input>
           </el-form-item>
+          <el-form-item label="장소">
+            <el-input v-model="form.place"></el-input>
+          </el-form-item>
+          <el-form-item label="인원" :rules="[{ required: true, message: '인원을 선택해주세요.!'},{ type: 'number', message: '인원은 숫자여야합니다.'}]"
+          >
+            <el-select v-model="form.volume" placeholder="인원를 선택해주세요.">
+              <el-option v-for="volume in volumeType" :label=volume :value=volume></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="카테고리">
             <el-select v-model="form.category" placeholder="카테고리를 선택해주세요.">
-              <el-option v-for="option in categoryOptions" :label=option :value=option></el-option>
+              <el-option v-for="option in categoryOptions" :label=option.title :value=option.value></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="스터디 기간">
@@ -27,13 +36,13 @@
             </el-checkbox-group>
           </el-form-item>
           <el-form-item label="스터디 설명">
-            <el-input type="textarea" rows=20 v-model="form.desc"></el-input>
+            <el-input type="textarea" rows=20 v-model="form.description"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button v-if="!show">좀더 생각해볼래요</el-button>
             <el-button type="primary" @click="onSubmit">{{buttonPhrase[show]}}</el-button>
           </el-form-item>
-          <el-form-item >
+          <el-form-item>
             <transition name="fade">
              <span v-if="show" style="font-weight: 700;">추가로 스터디원에게 원하는 정보가 있나요? 👀
                <el-button> YES </el-button>
@@ -57,13 +66,15 @@
           startDate: '',
           endDate: '',
           type: [],
-          desc: ''
+          description: '',
+          place: '',
+          volume: ''
         },
         categoryOptions: [
-          'FrontEnd 프론트엔드',
-          'BackEnd 백엔드',
-          'Algorithm 알고리즘',
-          'Design 디자인'
+          {'title': 'FrontEnd 프론트엔드', 'value': 'FRONTEND'},
+          {'title': 'BackEnd 백엔드', 'value': 'BACKEND'},
+          {'title': 'Algorithm 알고리즘', 'value': 'ALGORITHM'},
+          {'title': 'Design 디자인', 'value': 'DESIGN'},
         ],
         studyType: [
           '온라인 스터디',
@@ -72,14 +83,25 @@
           '책 함께 읽기',
           '발표 / 요약',
         ],
+        volumeType: Array.from({length: 20}, (x, i) => i + 1),
         show: false,
-        buttonPhrase: { false: '✨스터디 만들기✨', true: '✅ 스터디 만드는 중'}
+        buttonPhrase: {false: '✨스터디 만들기✨', true: '✅ 스터디 만드는 중'}
       }
     },
     methods: {
       onSubmit() {
         console.log('submit!');
+        this.createStudy()
         this.show = !this.show
+      },
+      createStudy() {
+        const baseURI = "/api/v1/users/1/studies"; //TODO userId 적용
+
+        this.form.startDate = this.$moment(this.form.startDate).format('YYYY-MM-DD hh:mm:ss')
+        this.form.endDate = this.$moment(this.form.endDate).format('YYYY-MM-DD hh:mm:ss')
+        this.axios.post(`${baseURI}`, this.form).then((result) => {
+          console.log(result)
+        })
       }
     }
   }
@@ -87,7 +109,7 @@
 
 <style>
   .fade-enter-active, .fade-leave-active {
-    transition:  all .6s ease;
+    transition: all .6s ease;
   }
 
   .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
