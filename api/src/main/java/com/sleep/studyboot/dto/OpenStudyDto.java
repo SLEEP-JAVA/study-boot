@@ -39,8 +39,8 @@ public class OpenStudyDto extends StudyDto {
                 .description(study.getDescription())
                 .place(study.getPlace())
                 .capacity(study.getCapacity())
-                .startDate(study.getStartDate())
-                .endDate(study.getEndDate())
+                .startDate(study.getPeriod().getStartDate())
+                .endDate(study.getPeriod().getEndDate())
                 .createdOn(study.getCreatedOn())
                 .modifiedOn(study.getModifiedOn())
                 .build();

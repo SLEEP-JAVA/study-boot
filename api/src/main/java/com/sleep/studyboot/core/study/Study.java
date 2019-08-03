@@ -31,11 +31,8 @@ public class Study {
     @Column(nullable = false)
     private int capacity;
 
-    @Column(nullable = false)
-    private LocalDate startDate;
-
-    @Column(nullable = false)
-    private LocalDate endDate;
+    @Embedded
+    private Period period;
 
     // TODO: Create User Table
 //    @CreatedBy
@@ -58,7 +55,7 @@ public class Study {
         this.modifiedOn = OffsetDateTime.now();
     }
 
-    public Study() {
+    private Study() {
     }
 
     @Builder
@@ -68,8 +65,7 @@ public class Study {
         this.description = description;
         this.place = place;
         this.capacity = capacity;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.period = new Period(startDate, endDate);
     }
 
     protected void rename(String name) {
@@ -77,8 +73,7 @@ public class Study {
     }
 
     protected void changePeriod(LocalDate startDate, LocalDate endDate) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.period = new Period(startDate, endDate);
     }
 
     protected void remove() {

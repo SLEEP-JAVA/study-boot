@@ -37,8 +37,8 @@ public class ClosedStudyDto extends StudyDto {
                 .description(study.getDescription())
                 .place(study.getPlace())
                 .capacity(study.getCapacity())
-                .startDate(study.getStartDate())
-                .endDate(study.getEndDate())
+                .startDate(study.getPeriod().getStartDate())
+                .endDate(study.getPeriod().getEndDate())
                 .removedOn(study.getRemovedOn())
                 .build();
     }

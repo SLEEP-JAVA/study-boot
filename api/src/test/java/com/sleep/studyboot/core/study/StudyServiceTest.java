@@ -61,7 +61,7 @@ public class StudyServiceTest {
         // then
         assertThat(study.getName()).isEqualTo(mockStudy.getName());
         assertThat(study.getCategory()).isEqualTo(mockStudy.getCategory());
-        assertThat(study.getStartDate()).isEqualTo(mockStudy.getStartDate().format(dateFormatter));
-        assertThat(study.getEndDate()).isEqualTo(mockStudy.getEndDate().format(dateFormatter));
+        assertThat(study.getStartDate()).isEqualTo(mockStudy.getPeriod().getStartDate().format(dateFormatter));
+        assertThat(study.getEndDate()).isEqualTo(mockStudy.getPeriod().getEndDate().format(dateFormatter));
     }
 }
