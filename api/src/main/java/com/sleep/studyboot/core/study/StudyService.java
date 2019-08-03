@@ -17,15 +17,7 @@ public class StudyService {
     private final StudyRepository studyRepository;
 
     public OpenStudyDto create(Long userId, StudyRegisterDto studyRegisterDto) {
-        Study study = Study.builder()
-                .name(studyRegisterDto.getName())
-                .category(studyRegisterDto.getCategory())
-                .description(studyRegisterDto.getDescription())
-                .place(studyRegisterDto.getPlace())
-                .capacity(studyRegisterDto.getCapacity())
-                .startDate(studyRegisterDto.getStartDate())
-                .endDate(studyRegisterDto.getEndDate())
-                .build();
+        var study = studyRegisterDto.toStudy();
 
         return OpenStudyDto.of(studyRepository.save(study));
     }

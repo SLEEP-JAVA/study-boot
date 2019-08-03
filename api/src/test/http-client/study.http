@@ -13,6 +13,31 @@ Content-Type: application/json
 
 ###
 
+POST {{address}}/v1/users/{{userId}}/studies
+Content-Type: application/json
+
+{
+  "name": "슬뤼입",
+  "category": "BACKEND",
+  "description": "자는 스터디 아닙니다. +_+",
+  "place": "하나아아아암!!",
+  "capacity": 4,
+  "startDate": "2019-07-27",
+  "endDate": "2019-08-27",
+  "properties": [
+    {
+      "name": "대상자",
+      "value": "주니어 개발자"
+    },
+    {
+      "name": "요일",
+      "value": "일요일"
+    }
+  ]
+}
+
+###
+
 GET {{address}}/v1/studies
 
 ###

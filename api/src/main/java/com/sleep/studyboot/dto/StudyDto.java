@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -25,4 +26,5 @@ class StudyDto {
     protected int capacity;
     protected String startDate;
     protected String endDate;
+    protected Set<PropertyDto> properties;
 }

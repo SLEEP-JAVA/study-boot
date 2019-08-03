@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
@@ -17,7 +19,8 @@ public class ClosedStudyDto extends StudyDto {
 
     @Builder
     public ClosedStudyDto(Long id, String name, Category category, String description, String place, int capacity,
-                          LocalDate startDate, LocalDate endDate, OffsetDateTime removedOn) {
+                          LocalDate startDate, LocalDate endDate, Set<PropertyDto> properties,
+                          OffsetDateTime removedOn) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -26,6 +29,7 @@ public class ClosedStudyDto extends StudyDto {
         this.capacity = capacity;
         this.startDate = startDate.format(dateFormatter);
         this.endDate = endDate.format(dateFormatter);
+        this.properties = properties;
         this.removedOn = removedOn.format(dateTimeFormatter);
     }
 
@@ -39,6 +43,9 @@ public class ClosedStudyDto extends StudyDto {
                 .capacity(study.getCapacity())
                 .startDate(study.getPeriod().getStartDate())
                 .endDate(study.getPeriod().getEndDate())
+                .properties(study.getProperties().stream()
+                        .map(property -> PropertyDto.of(property))
+                        .collect(Collectors.toSet()))
                 .removedOn(study.getRemovedOn())
                 .build();
     }

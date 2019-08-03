@@ -6,8 +6,12 @@ import lombok.Getter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Table(name = "study")
 @Getter
 public class Study {
 
@@ -34,6 +38,10 @@ public class Study {
     @Embedded
     private Period period;
 
+    @ElementCollection
+    @CollectionTable(name = "property", joinColumns = @JoinColumn(name = "study_id"))
+    private Set<Property> properties = new HashSet();
+
     // TODO: Create User Table
 //    @CreatedBy
 //    private User leader;
@@ -59,13 +67,15 @@ public class Study {
     }
 
     @Builder
-    public Study(String name, Category category, String description, String place, int capacity, LocalDate startDate, LocalDate endDate) {
+    public Study(String name, Category category, String description, String place, int capacity,
+                 LocalDate startDate, LocalDate endDate, Set<Property> properties) {
         this.name = name;
         this.category = category;
         this.description = description;
         this.place = place;
         this.capacity = capacity;
         this.period = new Period(startDate, endDate);
+        this.properties = properties;
     }
 
     protected void rename(String name) {
