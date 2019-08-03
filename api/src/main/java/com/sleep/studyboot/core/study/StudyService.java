@@ -35,7 +35,7 @@ public class StudyService {
     }
 
     public List<OpenStudyDto> getAllOpenStudies() {
-        var studies = studyRepository.findByRemovedDateIsNull();
+        var studies = studyRepository.findByRemovedOnIsNull();
 
         return studies.stream()
                 .map(study -> OpenStudyDto.of(study))
@@ -43,7 +43,7 @@ public class StudyService {
     }
 
     public List<ClosedStudyDto> getAllClosedStudies() {
-        var studies = studyRepository.findByRemovedDateIsNotNull();
+        var studies = studyRepository.findByRemovedOnIsNotNull();
 
         return studies.stream()
                 .map(study -> ClosedStudyDto.of(study))

@@ -40,8 +40,8 @@ public class StudyServiceTest {
         var endDate = startDate.plusMonths(1);
 
         Study mockStudy = new Study(name, category, description, place, capacity, startDate, endDate);
-        ReflectionTestUtils.setField(mockStudy, "createdDate", OffsetDateTime.now());
-        ReflectionTestUtils.setField(mockStudy, "modifiedDate", OffsetDateTime.now());
+        ReflectionTestUtils.setField(mockStudy, "createdOn", OffsetDateTime.now());
+        ReflectionTestUtils.setField(mockStudy, "modifiedOn", OffsetDateTime.now());
 
         when(repository.save(any())).thenReturn(mockStudy);
 

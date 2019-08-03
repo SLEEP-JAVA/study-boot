@@ -13,11 +13,11 @@ import java.time.OffsetDateTime;
 @Getter
 public class ClosedStudyDto extends StudyDto {
 
-    private String removedDate;
+    private String removedOn;
 
     @Builder
     public ClosedStudyDto(Long id, String name, Category category, String description, String place, int capacity,
-                          LocalDate startDate, LocalDate endDate, OffsetDateTime removedDate) {
+                          LocalDate startDate, LocalDate endDate, OffsetDateTime removedOn) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -26,7 +26,7 @@ public class ClosedStudyDto extends StudyDto {
         this.capacity = capacity;
         this.startDate = startDate.format(dateFormatter);
         this.endDate = endDate.format(dateFormatter);
-        this.removedDate = removedDate.format(dateTimeFormatter);
+        this.removedOn = removedOn.format(dateTimeFormatter);
     }
 
     public static ClosedStudyDto of(Study study) {
@@ -39,7 +39,7 @@ public class ClosedStudyDto extends StudyDto {
                 .capacity(study.getCapacity())
                 .startDate(study.getStartDate())
                 .endDate(study.getEndDate())
-                .removedDate(study.getRemovedDate())
+                .removedOn(study.getRemovedOn())
                 .build();
     }
 }

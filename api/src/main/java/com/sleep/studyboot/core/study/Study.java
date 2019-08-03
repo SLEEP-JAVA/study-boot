@@ -41,21 +41,21 @@ public class Study {
 //    @CreatedBy
 //    private User leader;
 
-    private OffsetDateTime createdDate;
-    private OffsetDateTime modifiedDate;
-    private OffsetDateTime removedDate;
+    private OffsetDateTime createdOn;
+    private OffsetDateTime modifiedOn;
+    private OffsetDateTime removedOn;
 
     @PrePersist
     protected void onCreate() {
         var now = OffsetDateTime.now();
 
-        this.createdDate = now;
-        this.modifiedDate = now;
+        this.createdOn = now;
+        this.modifiedOn = now;
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.modifiedDate = OffsetDateTime.now();
+        this.modifiedOn = OffsetDateTime.now();
     }
 
     public Study() {
@@ -82,6 +82,6 @@ public class Study {
     }
 
     protected void remove() {
-        this.removedDate = OffsetDateTime.now();
+        this.removedOn = OffsetDateTime.now();
     }
 }

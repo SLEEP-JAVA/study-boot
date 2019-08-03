@@ -13,12 +13,12 @@ import java.time.OffsetDateTime;
 @Getter
 public class OpenStudyDto extends StudyDto {
 
-    private String createdDate;
-    private String modifiedDate;
+    private String createdOn;
+    private String modifiedOn;
 
     @Builder
     public OpenStudyDto(Long id, String name, Category category, String description, String place, int capacity,
-                        LocalDate startDate, LocalDate endDate, OffsetDateTime createdDate, OffsetDateTime modifiedDate) {
+                        LocalDate startDate, LocalDate endDate, OffsetDateTime createdOn, OffsetDateTime modifiedOn) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -27,8 +27,8 @@ public class OpenStudyDto extends StudyDto {
         this.capacity = capacity;
         this.startDate = startDate.format(dateFormatter);
         this.endDate = endDate.format(dateFormatter);
-        this.createdDate = createdDate.format(dateTimeFormatter);
-        this.modifiedDate = modifiedDate.format(dateTimeFormatter);
+        this.createdOn = createdOn.format(dateTimeFormatter);
+        this.modifiedOn = modifiedOn.format(dateTimeFormatter);
     }
 
     public static OpenStudyDto of(Study study) {
@@ -41,8 +41,8 @@ public class OpenStudyDto extends StudyDto {
                 .capacity(study.getCapacity())
                 .startDate(study.getStartDate())
                 .endDate(study.getEndDate())
-                .createdDate(study.getCreatedDate())
-                .modifiedDate(study.getModifiedDate())
+                .createdOn(study.getCreatedOn())
+                .modifiedOn(study.getModifiedOn())
                 .build();
     }
 }
