@@ -17,7 +17,10 @@ public class GithubAuthenticationSuccessHandler implements AuthenticationSuccess
     private final HttpSession httpSession;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        Authentication authentication) throws IOException, ServletException {
+
         OAuth2UserInfo oAuth2UserInfo = (OAuth2UserInfo) authentication.getPrincipal();
         httpSession.setAttribute("LOGIN_USER_EMAIL", oAuth2UserInfo.getEmail());
 
