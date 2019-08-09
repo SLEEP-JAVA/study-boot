@@ -17,15 +17,7 @@ public class StudyService {
     private final StudyRepository studyRepository;
 
     public OpenStudyDto create(Long userId, StudyRegisterDto studyRegisterDto) {
-        Study study = Study.builder()
-                .name(studyRegisterDto.getName())
-                .category(studyRegisterDto.getCategory())
-                .description(studyRegisterDto.getDescription())
-                .place(studyRegisterDto.getPlace())
-                .volume(studyRegisterDto.getVolume())
-                .startDate(studyRegisterDto.getStartDate())
-                .endDate(studyRegisterDto.getEndDate())
-                .build();
+        var study = studyRegisterDto.toStudy();
 
         return OpenStudyDto.of(studyRepository.save(study));
     }
@@ -35,7 +27,7 @@ public class StudyService {
     }
 
     public List<OpenStudyDto> getAllOpenStudies() {
-        var studies = studyRepository.findByRemovedDateIsNull();
+        var studies = studyRepository.findByRemovedOnIsNull();
 
         return studies.stream()
                 .map(study -> OpenStudyDto.of(study))
@@ -43,7 +35,7 @@ public class StudyService {
     }
 
     public List<ClosedStudyDto> getAllClosedStudies() {
-        var studies = studyRepository.findByRemovedDateIsNotNull();
+        var studies = studyRepository.findByRemovedOnIsNotNull();
 
         return studies.stream()
                 .map(study -> ClosedStudyDto.of(study))

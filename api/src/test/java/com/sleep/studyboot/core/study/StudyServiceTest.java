@@ -8,9 +8,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,7 +25,7 @@ public class StudyServiceTest {
     @InjectMocks
     StudyService sut;
 
-    final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    final static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Test
     void study_생성_ok() {
@@ -36,13 +35,13 @@ public class StudyServiceTest {
         var category = Category.FRONTEND;
         var description = "설명";
         var place = "장소";
-        var volume = 4;
-        var startDate = LocalDateTime.now();
+        var capacity = 4;
+        var startDate = LocalDate.now();
         var endDate = startDate.plusMonths(1);
 
-        Study mockStudy = new Study(name, category, description, place, volume, OffsetDateTime.of(startDate, ZoneOffset.UTC), OffsetDateTime.of(endDate, ZoneOffset.UTC));
-        ReflectionTestUtils.setField(mockStudy, "createdDate", OffsetDateTime.now());
-        ReflectionTestUtils.setField(mockStudy, "modifiedDate", OffsetDateTime.now());
+        Study mockStudy = new Study(name, category, description, place, capacity, startDate, endDate);
+        ReflectionTestUtils.setField(mockStudy, "createdOn", OffsetDateTime.now());
+        ReflectionTestUtils.setField(mockStudy, "modifiedOn", OffsetDateTime.now());
 
         when(repository.save(any())).thenReturn(mockStudy);
 
@@ -53,7 +52,7 @@ public class StudyServiceTest {
                         .category(category)
                         .description(description)
                         .place(place)
-                        .volume(volume)
+                        .capacity(capacity)
                         .startDate(startDate)
                         .endDate(endDate)
                         .build()
@@ -62,7 +61,7 @@ public class StudyServiceTest {
         // then
         assertThat(study.getName()).isEqualTo(mockStudy.getName());
         assertThat(study.getCategory()).isEqualTo(mockStudy.getCategory());
-        assertThat(study.getStartDate()).isEqualTo(mockStudy.getStartDate().format(formatter));
-        assertThat(study.getEndDate()).isEqualTo(mockStudy.getEndDate().format(formatter));
+        assertThat(study.getStartDate()).isEqualTo(mockStudy.getPeriod().getStartDate().format(dateFormatter));
+        assertThat(study.getEndDate()).isEqualTo(mockStudy.getPeriod().getEndDate().format(dateFormatter));
     }
 }

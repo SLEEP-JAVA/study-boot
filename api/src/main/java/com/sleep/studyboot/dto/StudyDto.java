@@ -6,20 +6,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
 class StudyDto {
 
     @JsonIgnore
-    static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    @JsonIgnore
+    static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     protected Long id;
     protected String name;
     protected Category category;
     protected String description;
     protected String place;
-    protected int volume;
+    protected int capacity;
     protected String startDate;
     protected String endDate;
+    protected Set<PropertyDto> properties;
 }

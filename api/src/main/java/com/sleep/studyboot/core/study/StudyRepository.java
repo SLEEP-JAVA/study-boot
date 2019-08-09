@@ -6,6 +6,6 @@ import java.util.List;
 
 interface StudyRepository extends JpaRepository<Study, Long> {
 
-    List<Study> findByRemovedDateIsNull();
-    List<Study> findByRemovedDateIsNotNull();
+    List<Study> findByRemovedOnIsNull();
+    List<Study> findByRemovedOnIsNotNull();
 }

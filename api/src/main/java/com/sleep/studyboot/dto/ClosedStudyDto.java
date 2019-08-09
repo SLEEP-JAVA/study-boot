@@ -6,26 +6,31 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
 public class ClosedStudyDto extends StudyDto {
 
-    private String removedDate;
+    private String removedOn;
 
     @Builder
-    public ClosedStudyDto(Long id, String name, Category category, String description, String place, int volume,
-                          OffsetDateTime startDate, OffsetDateTime endDate, OffsetDateTime removedDate) {
+    public ClosedStudyDto(Long id, String name, Category category, String description, String place, int capacity,
+                          LocalDate startDate, LocalDate endDate, Set<PropertyDto> properties,
+                          OffsetDateTime removedOn) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.description = description;
         this.place = place;
-        this.volume = volume;
-        this.startDate = startDate.format(formatter);
-        this.endDate = endDate.format(formatter);
-        this.removedDate = removedDate.format(formatter);
+        this.capacity = capacity;
+        this.startDate = startDate.format(dateFormatter);
+        this.endDate = endDate.format(dateFormatter);
+        this.properties = properties;
+        this.removedOn = removedOn.format(dateTimeFormatter);
     }
 
     public static ClosedStudyDto of(Study study) {
@@ -35,10 +40,13 @@ public class ClosedStudyDto extends StudyDto {
                 .category(study.getCategory())
                 .description(study.getDescription())
                 .place(study.getPlace())
-                .volume(study.getVolume())
-                .startDate(study.getStartDate())
-                .endDate(study.getEndDate())
-                .removedDate(study.getRemovedDate())
+                .capacity(study.getCapacity())
+                .startDate(study.getPeriod().getStartDate())
+                .endDate(study.getPeriod().getEndDate())
+                .properties(study.getProperties().stream()
+                        .map(property -> PropertyDto.of(property))
+                        .collect(Collectors.toSet()))
+                .removedOn(study.getRemovedOn())
                 .build();
     }
 }

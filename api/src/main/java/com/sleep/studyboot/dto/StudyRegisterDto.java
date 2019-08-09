@@ -2,13 +2,17 @@ package com.sleep.studyboot.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sleep.studyboot.core.study.Category;
+import com.sleep.studyboot.core.study.Property;
+import com.sleep.studyboot.core.study.Study;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
@@ -18,30 +22,41 @@ public class StudyRegisterDto {
     private Category category;
     private String description;
     private String place;
-    private int volume;
+    private int capacity;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime startDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime endDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
+
+    private Set<PropertyDto> properties = new HashSet();
 
     @Builder
-    public StudyRegisterDto(String name, Category category, String description, String place, int volume, LocalDateTime startDate, LocalDateTime endDate) {
+    public StudyRegisterDto(String name, Category category, String description, String place, int capacity,
+                            LocalDate startDate, LocalDate endDate, Set<PropertyDto> properties) {
         this.name = name;
         this.category = category;
         this.description = description;
         this.place = place;
-        this.volume = volume;
+        this.capacity = capacity;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.properties = properties;
     }
 
-    public OffsetDateTime getStartDate() {
-        return OffsetDateTime.of(startDate, ZoneOffset.UTC);
-    }
-
-    public OffsetDateTime getEndDate() {
-        return OffsetDateTime.of(endDate, ZoneOffset.UTC);
+    public Study toStudy() {
+        return Study.builder()
+                .name(name)
+                .category(category)
+                .description(description)
+                .place(place)
+                .capacity(capacity)
+                .startDate(startDate)
+                .endDate(endDate)
+                .properties(properties.stream()
+                        .map(property -> new Property(property.getName(), property.getValue()))
+                        .collect(Collectors.toSet()))
+                .build();
     }
 }

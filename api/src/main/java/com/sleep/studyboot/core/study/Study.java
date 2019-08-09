@@ -4,9 +4,14 @@ import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Table(name = "study")
 @Getter
 public class Study {
 
@@ -28,59 +33,60 @@ public class Study {
     private String place;
 
     @Column(nullable = false)
-    private int volume;
+    private int capacity;
 
-    @Column(nullable = false)
-    private OffsetDateTime startDate;
+    @Embedded
+    private Period period;
 
-    @Column(nullable = false)
-    private OffsetDateTime endDate;
+    @ElementCollection
+    @CollectionTable(name = "property", joinColumns = @JoinColumn(name = "study_id"))
+    private Set<Property> properties = new HashSet();
 
     // TODO: Create User Table
 //    @CreatedBy
 //    private User leader;
 
-    private OffsetDateTime createdDate;
-    private OffsetDateTime modifiedDate;
-    private OffsetDateTime removedDate;
+    private OffsetDateTime createdOn;
+    private OffsetDateTime modifiedOn;
+    private OffsetDateTime removedOn;
 
     @PrePersist
     protected void onCreate() {
         var now = OffsetDateTime.now();
 
-        this.createdDate = now;
-        this.modifiedDate = now;
+        this.createdOn = now;
+        this.modifiedOn = now;
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.modifiedDate = OffsetDateTime.now();
+        this.modifiedOn = OffsetDateTime.now();
     }
 
-    public Study() {
+    private Study() {
     }
 
     @Builder
-    public Study(String name, Category category, String description, String place, int volume, OffsetDateTime startDate, OffsetDateTime endDate) {
+    public Study(String name, Category category, String description, String place, int capacity,
+                 LocalDate startDate, LocalDate endDate, Set<Property> properties) {
         this.name = name;
         this.category = category;
         this.description = description;
         this.place = place;
-        this.volume = volume;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.capacity = capacity;
+        this.period = new Period(startDate, endDate);
+        this.properties = properties;
     }
 
     protected void rename(String name) {
         this.name = name;
     }
 
-    protected void changePeriod(OffsetDateTime startDate, OffsetDateTime endDate) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+    protected void changePeriod(LocalDate startDate, LocalDate endDate) {
+        this.period = new Period(startDate, endDate);
     }
 
     protected void remove() {
-        this.removedDate = OffsetDateTime.now();
+        this.removedOn = OffsetDateTime.now();
     }
 }
