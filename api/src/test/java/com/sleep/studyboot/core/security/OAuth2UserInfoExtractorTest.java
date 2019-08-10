@@ -37,7 +37,7 @@ class OAuth2UserInfoExtractorTest {
 
         // then
         assertThat(userInfo.getName()).isEqualTo("minzy");
-        assertThat(userInfo.getAvartarUrl()).isEqualTo("url");
+        assertThat(userInfo.getAvatarUrl()).isEqualTo("url");
         assertThat(userInfo.getEmail()).isEqualTo("abc@abc.com");
     }
 
