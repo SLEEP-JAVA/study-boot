@@ -97,8 +97,8 @@
       createStudy() {
         const baseURI = "/api/v1/users/1/studies"; //TODO userId 적용
 
-        this.form.startDate = this.$moment(this.form.startDate).format('YYYY-MM-DD hh:mm:ss')
-        this.form.endDate = this.$moment(this.form.endDate).format('YYYY-MM-DD hh:mm:ss')
+        this.form.startDate = this.$moment(this.form.startDate).format('YYYY-MM-DD')
+        this.form.endDate = this.$moment(this.form.endDate).format('YYYY-MM-DD')
         this.axios.post(`${baseURI}`, this.form).then((result) => {
           console.log(result)
         })
