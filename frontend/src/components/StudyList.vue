@@ -2,6 +2,7 @@
   <div style="padding: 20px">
     지금 핫한 스터디
 
+    <el-button @click="fetchData"> test button </el-button>
     <el-row :gutter="20">
       <el-col :span="8">
         <div class="grid-content bg-purple">
@@ -48,7 +49,16 @@
     data() {
       return {};
     },
-    methods: {}
+    methods: {
+      fetchData() {
+        const baseURI = "/api/v1/studies" //TODO userId 적용
+
+        this.axios.get(`${baseURI}`).then((result) => {
+          console.log(result)
+        }).catch((error) => {
+        })
+      }
+    }
   }
 </script>
 <style>
