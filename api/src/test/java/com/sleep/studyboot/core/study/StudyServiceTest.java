@@ -39,7 +39,7 @@ public class StudyServiceTest {
         var startDate = LocalDate.now();
         var endDate = startDate.plusMonths(1);
 
-        Study mockStudy = new Study(name, category, description, place, capacity, startDate, endDate);
+        Study mockStudy = new Study(name, category, description, place, capacity, startDate, endDate, null);
         ReflectionTestUtils.setField(mockStudy, "createdOn", OffsetDateTime.now());
         ReflectionTestUtils.setField(mockStudy, "modifiedOn", OffsetDateTime.now());
 
