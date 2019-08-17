@@ -1,76 +1,57 @@
 <template>
-  <div style="padding: 20px">
-    지금 핫한 스터디
-
-    <el-button @click="fetchData"> test button </el-button>
-    <el-row :gutter="20">
-      <el-col :span="8">
-        <div class="grid-content bg-purple">
-          <el-card :body-style="{ padding: '0px' }">
-            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-            <div style="padding: 14px;">
-              <span>흠 이상한ㄷ </span>
-              <div class="bottom clearfix">
-                <time class="time">{{ currentDate }}</time>
-                <el-button type="text" class="button">Operating</el-button>
-              </div>
-            </div>
-          </el-card>
+  <div style="padding: 20px" v-if="studies && studies.length">
+    <el-card v-for="(study, index) in studies" :key="study.id" v-on:click.native="expand(index)">
+      <div>
+        <li>이름: {{ study.name }}</li>
+        <li>시작일: {{ study.startDate }}</li>
+        <li>종료일: {{ study.endDate }}</li>
+        <li>장소: {{ study.place }}</li>
+        <li>모집인원: 0 / {{ study.capacity }}</li>
+      </div>
+      <transition name="detail">
+        <div v-if="expanded[index]">
+          <span>설명: {{ study.description }}</span>
+          <div v-if="study.properties && study.properties.length">
+            <li v-for="property in study.properties">{{ property.name }}: {{ property.value }}</li>
+          </div>
         </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple">
-          <el-card :body-style="{ padding: '0px' }">
-            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-            <div style="padding: 14px;">
-              <span>호이 </span>
-            </div>
-          </el-card>
-        </div>
-      </el-col>
-      <el-col :span="8">
-        <div class="grid-content bg-purple">
-          <el-card :body-style="{ padding: '0px' }">
-            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-            <div style="padding: 14px;">
-              <span>호이 </span>
-            </div>
-          </el-card>
-        </div>
-      </el-col>
-
-    </el-row>
+      </transition>
+    </el-card>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'StudyList',
-    data() {
-      return {};
+    name: 'studies',
+    data: () => {
+      return {
+        studies: [],
+        expanded: []
+      }
+    },
+    created() {
+      const baseURI = "/api/v1/studies";
+
+      this.axios.get(`${baseURI}`)
+        .then(response => {
+          console.log(response);
+
+          this.studies = response.data.open;
+          this.expanded = Array(this.studies.length).fill(false);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     methods: {
-      fetchData() {
-        const baseURI = "/api/v1/studies" //TODO userId 적용
+      expand: function (index) {
+        if (this.expanded[index]) {
+          this.expanded = this.expanded.map(() => false);
+          return;
+        }
 
-        this.axios.get(`${baseURI}`).then((result) => {
-          console.log(result)
-        }).catch((error) => {
-        })
+        this.expanded = this.expanded.map((x, i) => i === index);
       }
     }
   }
 </script>
-<style>
-  .image {
-    width: 100%;
-    display: block;
-  }
-
-
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-
-</style>
