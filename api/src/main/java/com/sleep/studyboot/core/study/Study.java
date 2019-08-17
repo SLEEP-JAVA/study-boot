@@ -38,7 +38,7 @@ public class Study {
     @Embedded
     private Period period;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "property", joinColumns = @JoinColumn(name = "study_id"))
     private Set<Property> properties = new HashSet();
 
