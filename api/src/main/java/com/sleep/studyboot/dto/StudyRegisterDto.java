@@ -1,18 +1,19 @@
 package com.sleep.studyboot.dto;
 
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sleep.studyboot.core.study.Category;
 import com.sleep.studyboot.core.study.Property;
 import com.sleep.studyboot.core.study.Study;
+import com.sleep.studyboot.core.study.StudyStatus;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
@@ -31,6 +32,8 @@ public class StudyRegisterDto {
     private LocalDate endDate;
 
     private Set<PropertyDto> properties = new HashSet();
+
+    private StudyStatus status = StudyStatus.OPEN;
 
     @Builder
     public StudyRegisterDto(String name, Category category, String description, String place, int capacity,

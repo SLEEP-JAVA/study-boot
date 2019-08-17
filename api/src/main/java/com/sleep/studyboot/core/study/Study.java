@@ -1,14 +1,28 @@
 package com.sleep.studyboot.core.study;
 
-import lombok.Builder;
-import lombok.Getter;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Table;
+
+import lombok.Builder;
+import lombok.Getter;
 
 @Entity
 @Table(name = "study")
@@ -45,6 +59,9 @@ public class Study {
     // TODO: Create User Table
 //    @CreatedBy
 //    private User leader;
+
+    @Enumerated(value = EnumType.STRING)
+    private StudyStatus status = StudyStatus.OPEN;
 
     private OffsetDateTime createdOn;
     private OffsetDateTime modifiedOn;

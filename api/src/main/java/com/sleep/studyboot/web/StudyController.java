@@ -1,31 +1,45 @@
 package com.sleep.studyboot.web;
 
-import com.sleep.studyboot.core.study.StudyService;
-import com.sleep.studyboot.dto.StudyRegisterDto;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequiredArgsConstructor
+import com.sleep.studyboot.core.study.Category;
+import com.sleep.studyboot.core.study.StudyService;
+import com.sleep.studyboot.dto.StudyDto;
+import com.sleep.studyboot.dto.StudyRegisterDto;
+
+@RestController
 public class StudyController {
 
     private final StudyService studyService;
 
+    @Autowired
+    public StudyController(StudyService studyService) {
+        this.studyService = studyService;
+    }
+
     @GetMapping("/v1/studies")
-    public ResponseEntity showStudies() {
-        var studies = studyService.getAllStudies();
-        return ResponseEntity.ok().body(studies);
+    public List<StudyDto> showStudies() {
+        return studyService.getAllStudies();
     }
 
     @GetMapping("/v1/studies/{studyId}")
-    public ResponseEntity showStudy(@PathVariable Long studyId) {
-        var study = studyService.getStudy(studyId);
-        return ResponseEntity.ok().body(study);
+    public StudyDto showStudy(@PathVariable Long studyId) {
+        return studyService.getStudy(studyId);
+    }
+
+    // TODO /v1/studies 와 합쳐서 params 여부에 따라 달라지게 하기
+    @GetMapping("/v1/studies/filter")
+    public List<StudyDto> showStudiesByCategory(@RequestParam Category category) {
+        return studyService.getStudiesBy(category);
     }
 
     @GetMapping("/v1/users/{userId}/studies")

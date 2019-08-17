@@ -6,6 +6,7 @@ import java.util.List;
 
 interface StudyRepository extends JpaRepository<Study, Long> {
 
-    List<Study> findByRemovedOnIsNull();
-    List<Study> findByRemovedOnIsNotNull();
+    List<Study> findByRemovedOnIsNullOrderByCreatedOnDesc();
+
+    List<Study> findByRemovedOnIsNullAndCategoryEqualsOrderByCreatedOnDesc(Category category);
 }
