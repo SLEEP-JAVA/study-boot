@@ -14,7 +14,7 @@ spring:
       client:
         registration:
           github:
-            client-id: <CLIENT-ID>
-            client-secret: <CLIENT-SECRET>
+            client-id: ${GITHUB-CLIENT-ID}
+            client-secret: ${GITHUB-CLIENT-SECRET}
 server:
   port: 8089
