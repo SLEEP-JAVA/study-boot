@@ -29,7 +29,7 @@ public class StudyRepositoryTest {
         var endDate = startDate.plusMonths(1);
 
         // when
-        var mayBeStudy = new Study(name, category, description, place, capacity, startDate, endDate);
+        var mayBeStudy = new Study(name, category, description, place, capacity, startDate, endDate, null);
         studyRepository.save(mayBeStudy);
 
         // then
