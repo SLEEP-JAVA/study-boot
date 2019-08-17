@@ -59,9 +59,9 @@ configure(javaProjects) {
         testImplementation('org.springframework.security:spring-security-test')
         
         testCompileOnly("org.projectlombok:lombok:1.18.8")
-        testImplementation("org.junit.jupiter:junit-jupiter-api:2.27.0")
-        testImplementation("org.junit.jupiter:junit-jupiter-params:2.27.0")
-        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:2.27.0")
+        testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.2")
+        testImplementation("org.junit.jupiter:junit-jupiter-params:5.4.2")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.2")
         testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.4.2")
         testRuntimeOnly("org.junit.platform:junit-platform-commons:1.4.2")
 
