@@ -1,6 +1,6 @@
 
 
-## 토이스토리 프로젝트 
+## 토이스토리 프로젝트 [![Build Status](https://travis-ci.org/SLEEP-JAVA/study-boot.svg?branch=develop)](https://travis-ci.org/SLEEP-JAVA/study-boot)
 
 준영 신은 민지 다영
 
