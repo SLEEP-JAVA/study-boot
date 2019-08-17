@@ -53,12 +53,26 @@ configure(javaProjects) {
         runtimeOnly 'com.h2database:h2'
         runtimeOnly 'mysql:mysql-connector-java'
         annotationProcessor 'org.projectlombok:lombok'
-
-        testImplementation 'org.mockito:mockito-core:2.27.0'
-        testImplementation 'org.mockito:mockito-junit-jupiter:2.27.0'
-        testImplementation 'org.assertj:assertj-core:3.12.2'
+        
 
         integrationTestAnnotationProcessor "org.projectlombok:lombok:1.18.8"
-        testImplementation('org.springframework.boot:spring-boot-starter-test') 
+        testImplementation('org.springframework.security:spring-security-test')
+        
+        testCompileOnly("org.projectlombok:lombok:1.18.8")
+        testImplementation("org.junit.jupiter:junit-jupiter-api:2.27.0")
+        testImplementation("org.junit.jupiter:junit-jupiter-params:2.27.0")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:2.27.0")
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.4.2")
+        testRuntimeOnly("org.junit.platform:junit-platform-commons:1.4.2")
+
+        testImplementation("org.mockito:mockito-core:2.27.0")
+        testImplementation("org.mockito:mockito-junit-jupiter:2.27.0")
+        testImplementation('org.assertj:assertj-core:3.12.2')
+
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'junit', module: 'junit'
+            exclude group: 'org.assertj', module: 'assertj-core'
+            exclude group: 'org.mockito', module: 'mockito-core'
+        }
     }
 }
