@@ -15,17 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@Slf4j
 public class StudyRepositoryTest {
 
     @Autowired
     StudyRepository sut;
 
-
-    @Test
-    public void doNothingTest() {
-        log.info("Everything is Fine!");
-    }
 
     @Test
     public void 스터디_생성() {
