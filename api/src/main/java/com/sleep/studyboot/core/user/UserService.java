@@ -28,7 +28,7 @@ public class UserService {
     private User saveUser(OAuth2UserInfo userInfo) {
         return userRepository.save(User.builder()
                 .name(userInfo.getName())
-                .avartarUrl(userInfo.getAvatarUrl())
+                .avatarUrl(userInfo.getAvatarUrl())
                 .email(userInfo.getEmail())
                 .build());
     }

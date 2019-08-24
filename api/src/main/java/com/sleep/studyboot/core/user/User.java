@@ -24,18 +24,18 @@ public class User {
     private String name;
 
     @Column(name = "avartar_url")
-    private String avartarUrl;
+    private String avatarUrl;
 
     @Builder
-    public User(String email, String name, String avartarUrl) {
+    public User(String email, String name, String avatarUrl) {
         this.email = email;
         this.name = name;
-        this.avartarUrl = avartarUrl;
+        this.avatarUrl = avatarUrl;
     }
 
     public User updateByGithub(String name, String avartarUrl) {
         this.name = name;
-        this.avartarUrl = avartarUrl;
+        this.avatarUrl = avartarUrl;
 
         return this;
     }

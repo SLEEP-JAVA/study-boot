@@ -27,7 +27,7 @@ class UserServiceTest {
         user = User.builder()
                 .email("email")
                 .name("name")
-                .avartarUrl("url")
+                .avatarUrl("url")
                 .build();
     }
 
@@ -48,7 +48,7 @@ class UserServiceTest {
                 .build());
 
         // then
-        assertThat(userDto).isEqualToComparingFieldByField(user);
+        assertThat(userDto).isEqualToIgnoringGivenFields(user, "id");
         verify(userRepository).findByEmail(anyString());
         verify(userRepository).save(any(User.class));
     }
