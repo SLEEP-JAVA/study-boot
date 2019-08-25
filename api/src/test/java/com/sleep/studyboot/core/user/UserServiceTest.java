@@ -27,7 +27,7 @@ class UserServiceTest {
         user = User.builder()
                 .email("email")
                 .name("name")
-                .avartarUrl("url")
+                .avatarUrl("url")
                 .build();
     }
 
@@ -44,11 +44,11 @@ class UserServiceTest {
         UserDto userDto = sut.saveOrUpdate(OAuth2UserInfo.builder()
                 .email("email")
                 .name("name")
-                .avartarUrl("url")
+                .avatarUrl("url")
                 .build());
 
         // then
-        assertThat(userDto).isEqualToComparingFieldByField(user);
+        assertThat(userDto).isEqualToIgnoringGivenFields(user, "id");
         verify(userRepository).findByEmail(anyString());
         verify(userRepository).save(any(User.class));
     }
@@ -60,7 +60,7 @@ class UserServiceTest {
         OAuth2UserInfo userInfo = OAuth2UserInfo.builder()
                 .email("email")
                 .name("updated Name")
-                .avartarUrl("updated Url")
+                .avatarUrl("updated Url")
                 .build();
         when(userRepository.findByEmail(anyString()))
                 .thenReturn(Optional.of(user));
@@ -72,5 +72,20 @@ class UserServiceTest {
         assertThat(userDto).isEqualToComparingFieldByField(userInfo);
         verify(userRepository).findByEmail(anyString());
         verify(userRepository, times(0)).save(any(User.class));
+    }
+
+    @Test
+    @DisplayName("email을 통해 사용자 정보 받아오기")
+    void getUser() {
+        // given
+        when(userRepository.findByEmail(anyString()))
+                .thenReturn(Optional.of(user));
+
+        // when
+        UserDto userDto = sut.getUser(user.getEmail());
+
+        // then
+        assertThat(userDto).isEqualToComparingFieldByField(user);
+        verify(userRepository).findByEmail(anyString());
     }
 }

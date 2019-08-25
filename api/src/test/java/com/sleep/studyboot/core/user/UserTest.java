@@ -13,14 +13,14 @@ class UserTest {
         User user = User.builder()
                 .name("name")
                 .email("email")
-                .avartarUrl("url")
+                .avatarUrl("url")
                 .build();
 
         // when
-        User updatedUser = user.updateByGithub("updated name", "update url");
+        User updatedUser = user.updateByGithub("updated name", "updated url");
 
         // then
         assertThat(updatedUser.getName()).isEqualTo("updated name");
-        assertThat(updatedUser.getAvartarUrl()).isEqualTo("updated url");
+        assertThat(updatedUser.getAvatarUrl()).isEqualTo("updated url");
     }
 }

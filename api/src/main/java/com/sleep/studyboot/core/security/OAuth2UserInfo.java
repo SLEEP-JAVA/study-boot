@@ -23,20 +23,20 @@ public class OAuth2UserInfo implements OAuth2User, Serializable {
 
     private String name;
 
-    private String avartarUrl;
+    private String avatarUrl;
 
     @Builder
-    public OAuth2UserInfo(String email, String name, String avartarUrl) {
+    public OAuth2UserInfo(String email, String name, String avatarUrl) {
         this.email = email;
         this.name = name;
-        this.avartarUrl = avartarUrl;
+        this.avatarUrl = avatarUrl;
     }
 
     public static OAuth2UserInfo newInstance(String email, String name, String avartarUrl) {
         return OAuth2UserInfo.builder()
                 .email(email)
                 .name(name)
-                .avartarUrl(avartarUrl)
+                .avatarUrl(avartarUrl)
                 .build();
     }
 

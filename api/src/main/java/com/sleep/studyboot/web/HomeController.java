@@ -1,26 +1,28 @@
 package com.sleep.studyboot.web;
 
+import com.sleep.studyboot.core.security.CustomUserDetailsService;
+import com.sleep.studyboot.core.security.OAuth2UserInfo;
+import com.sleep.studyboot.dto.user.LoginUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
-    private final HttpSession httpSession;
+    private final CustomUserDetailsService userDetailsService;
 
     @GetMapping("/")
-    public ResponseEntity<String> home() {
-        String email = (String) httpSession.getAttribute("LOGIN_USER_EMAIL");
-
-        if (ObjectUtils.isEmpty(email)) {
+    public ResponseEntity<String> home(@AuthenticationPrincipal OAuth2UserInfo userInfo) {
+        if (userInfo == null) {
             return ResponseEntity.ok().body("home");
         }
 
-        return ResponseEntity.ok().body(email);
+        // Usage example
+        LoginUser loginUser = userDetailsService.loadUserByUsername(userInfo.getEmail());
+
+        return ResponseEntity.ok().body(loginUser.getEmail());
     }
 }

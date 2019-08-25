@@ -1,13 +1,11 @@
 package com.sleep.studyboot.config;
 
-import com.sleep.studyboot.core.security.CustomOAuth2UserService;
-import com.sleep.studyboot.core.security.GithubAuthenticationFailureHandler;
-import com.sleep.studyboot.core.security.GithubAuthenticationSuccessHandler;
-import com.sleep.studyboot.core.security.OAuth2UserInfo;
+import com.sleep.studyboot.core.security.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -23,6 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final GithubAuthenticationSuccessHandler successHandler;
     private final GithubAuthenticationFailureHandler failureHandler;
+    private final CustomUserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -56,7 +55,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+
         return source;
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+
+        return authenticationProvider;
     }
 
 }
