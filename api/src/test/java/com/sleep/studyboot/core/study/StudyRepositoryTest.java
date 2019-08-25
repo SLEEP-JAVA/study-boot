@@ -7,15 +7,19 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import lombok.extern.slf4j.Slf4j;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class StudyRepositoryTest {
 
     @Autowired
-    StudyRepository studyRepository;
+    StudyRepository sut;
+
 
     @Test
     public void 스터디_생성() {
@@ -30,14 +34,55 @@ public class StudyRepositoryTest {
 
         // when
         var mayBeStudy = new Study(name, category, description, place, capacity, startDate, endDate, null);
-        studyRepository.save(mayBeStudy);
+        sut.save(mayBeStudy);
 
         // then
-        var study = studyRepository.findById(mayBeStudy.getId())
-                .orElse(null);
+        var study = sut.findById(mayBeStudy.getId())
+                       .orElse(null);
 
         assertThat(study).isNotNull();
         assertThat(study.getId()).isEqualTo(mayBeStudy.getId());
         assertThat(study.getName()).isEqualTo(mayBeStudy.getName());
+    }
+
+    @Test
+    public void 스터디_최신순_list() {
+        // given
+
+        var study = StudyFixture.aStudy();
+        var study2 = StudyFixture.aStudy();
+
+        sut.save(study);
+        sut.save(study2);
+
+        // when
+
+        List<Study> studyList = sut.findByRemovedOnIsNullOrderByCreatedOnDesc();
+
+        assertThat(studyList).isNotNull();
+        assertThat(studyList).hasSize(2);
+        assertThat(studyList.get(0).getName()).isEqualTo(study2.getName());
+        assertThat(studyList.get(0).getCreatedOn()).isAfter(studyList.get(1).getCreatedOn());
+
+    }
+
+    @Test
+    public void 스터디_카테고리로_찾기_list() {
+
+        // given
+        var study = StudyFixture.aStudy();
+        var study2 = StudyFixture.aStudy(Category.BACKEND);
+
+        sut.saveAll(List.of(study, study2));
+
+        // when
+        List<Study> studyList = sut.findByRemovedOnIsNullAndCategoryEqualsOrderByCreatedOnDesc(Category.BACKEND);
+
+
+        // then
+        assertThat(studyList).isNotNull();
+        assertThat(studyList).hasSize(1);
+        assertThat(studyList).extracting("name").containsOnly(study2.getName());
+        assertThat(studyList).extracting("category").containsOnly(study2.getCategory());
     }
 }
