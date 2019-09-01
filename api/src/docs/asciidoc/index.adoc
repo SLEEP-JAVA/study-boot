@@ -1,0 +1,27 @@
+= API Docs
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+
+== Study Boot API
+
+Study Boot API 문서
+
+== 스터디 조회
+
+=== 스터디 조회 전체 API
+
+==== Curl
+include::{snippets}/study-list/curl-request.adoc[]
+
+==== Example Request
+include::{snippets}/study-list/http-request.adoc[]
+
+==== Example Response
+include::{snippets}/study-list/http-response.adoc[]
+
+==== Response Fields
+include::{snippets}/study-list/response-fields.adoc[]
