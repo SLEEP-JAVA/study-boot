@@ -1,10 +1,10 @@
-
-
 buildscript {
 
     ext {
         springBootVersion = '2.1.6.RELEASE'
         querydslPluginVersion = '1.0.10'
+        asciidoctorPluginVersion = '1.5.8'
+        snippetsDir = file('build/generated-snippets')
     }
     repositories {
         mavenCentral()
@@ -14,7 +14,7 @@ buildscript {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath "io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE"
         classpath "gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslPluginVersion}"
-
+        classpath "org.asciidoctor:asciidoctor-gradle-plugin:${asciidoctorPluginVersion}"
     }
 }
 
@@ -28,7 +28,8 @@ configure(javaProjects) {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
-    apply plugin: "com.ewerk.gradle.plugins.querydsl"
+    apply plugin: 'com.ewerk.gradle.plugins.querydsl'
+    apply plugin: 'org.asciidoctor.convert'
 
     sourceCompatibility = 11
 
@@ -62,29 +63,8 @@ configure(javaProjects) {
         runtimeOnly 'com.h2database:h2'
         runtimeOnly 'mysql:mysql-connector-java'
         annotationProcessor 'org.projectlombok:lombok'
-
-
-        integrationTestAnnotationProcessor "org.projectlombok:lombok:1.18.8"
-        testImplementation('org.springframework.security:spring-security-test')
-
-        testCompileOnly("org.projectlombok:lombok:1.18.8")
-        testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.2")
-        testImplementation("org.junit.jupiter:junit-jupiter-params:5.4.2")
-        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.2")
-        testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.4.2")
-        testRuntimeOnly("org.junit.platform:junit-platform-commons:1.4.2")
-
-        testImplementation("org.mockito:mockito-core:2.27.0")
-        testImplementation("org.mockito:mockito-junit-jupiter:2.27.0")
-        testImplementation('org.assertj:assertj-core:3.12.2')
-
-        testImplementation('org.springframework.boot:spring-boot-starter-test') {
-            exclude group: 'junit', module: 'junit'
-            exclude group: 'org.assertj', module: 'assertj-core'
-            exclude group: 'org.mockito', module: 'mockito-core'
-        }
     }
-
+    
     // querydsl
     def querydslSrcDir = 'src/main/generated'
 
@@ -101,13 +81,19 @@ configure(javaProjects) {
             }
         }
     }
-    
+
     compileQuerydsl{
         options.annotationProcessorPath = configurations.querydsl
     }
 
     configurations {
         querydsl.extendsFrom compileClasspath
+    }
+
+    // asciidoctor
+    asciidoctor {
+        attributes 'snippets': file('build/generated-snippets')
+        dependsOn test
     }
 
 }

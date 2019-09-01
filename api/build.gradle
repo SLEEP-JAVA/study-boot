@@ -6,6 +6,34 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // rest assured & asciidoc
+    implementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    implementation 'io.rest-assured:spring-mock-mvc'
+    implementation 'org.springframework.restdocs:spring-restdocs-restassured'
+
+    testImplementation 'io.rest-assured:rest-assured:3.0.2' 
+    testImplementation 'org.springframework.restdocs:spring-restdocs-restassured'
+
+    integrationTestAnnotationProcessor "org.projectlombok:lombok:1.18.8"
+    testImplementation('org.springframework.security:spring-security-test')
+
+    testCompileOnly("org.projectlombok:lombok:1.18.8")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.4.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.2")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.4.2")
+    testRuntimeOnly("org.junit.platform:junit-platform-commons:1.4.2")
+
+    testImplementation("org.mockito:mockito-core:2.27.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:2.27.0")
+    testImplementation('org.assertj:assertj-core:3.12.2')
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'junit', module: 'junit'
+        exclude group: 'org.assertj', module: 'assertj-core'
+        exclude group: 'org.mockito', module: 'mockito-core'
+    }
 }
 
 task('wrapper') {
@@ -22,4 +50,7 @@ bootRun {
 
 bootJar {
     excludeDevtools = true
+
+    dependsOn asciidoctor
 }
+
