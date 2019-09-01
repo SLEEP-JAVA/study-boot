@@ -36,7 +36,7 @@
         .then(response => {
           console.log(response);
 
-          this.studies = response.data.open;
+          this.studies = response.data;
           this.expanded = Array(this.studies.length).fill(false);
         })
         .catch(error => {
